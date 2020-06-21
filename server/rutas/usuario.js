@@ -1,13 +1,14 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
-const Usuario = require('../modelos/model_usuario');
 
+const Usuario = require('../modelos/model_usuario');
+const { verificarToken, verificarAdmin } = require('../middlewares/autentificacion')
 const app = express();
 
 // Get; obtener un registro
 
-app.get('/usuario', (req, res) => {
+app.get('/usuario', verificarToken, (req, res) => {
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
@@ -42,7 +43,7 @@ app.get('/usuario', (req, res) => {
 
 // Post: crear nuevo registro
 
-app.post('/usuario', (req, res) => {
+app.post('/usuario', [verificarToken, verificarAdmin], (req, res) => {
 
     let body = req.body;
     let usuario = new Usuario({
@@ -77,7 +78,7 @@ app.post('/usuario', (req, res) => {
 
 // Put: Actualizar un registro
 
-app.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id', [verificarToken, verificarAdmin], (req, res) => {
 
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado  ']);
@@ -103,7 +104,7 @@ app.put('/usuario/:id', (req, res) => {
 
 // Delete
 
-app.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id', [verificarToken, verificarAdmin], (req, res) => {
 
     let id = req.params.id;
 
