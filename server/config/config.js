@@ -14,7 +14,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 // Fecha de expiracion Token
 //=======================
 
-process.env.CADUCACION_TOKEN = 60 * 60 * 24 * 30;
+process.env.CADUCACION_TOKEN = '48h'
 
 //=======================
 // Seed autentificacion
