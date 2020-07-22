@@ -66,7 +66,7 @@ app.post('/categoria', verificarToken, (req, res) => {
         descripcion: body.descripcion,
         usuario: req.usuario._id
     });
-
+    
     categoria.save((err, categoriaDB) => {
 
         if (err) {
